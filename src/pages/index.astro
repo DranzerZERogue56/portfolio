@@ -1,24 +1,160 @@
 ---
-// Phase 1 scaffold: a minimal page that proves the build + deploy pipeline works.
-// Phase 2 replaces this with the real layout (hero, featured projects, about, contact).
-const name = "Ben Wrenn";
-const tagline = "Computer science student & builder — AI tools, mobile apps, and games.";
+import Layout from "../layouts/Layout.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import { site } from "../data/site";
+import { featured, more } from "../data/projects";
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content={`${name} — portfolio`} />
-    <title>{name} — Portfolio</title>
-  </head>
-  <body>
-    <main>
-      <h1>{name}</h1>
-      <p>{tagline}</p>
-      <p><a href="https://github.com/DranzerZERogue56">GitHub</a></p>
-      <small>Portfolio in progress.</small>
-    </main>
-  </body>
-</html>
+<Layout>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="container">
+      <p class="eyebrow">Portfolio</p>
+      <h1 id="hero-title">{site.name}</h1>
+      <p class="tagline">{site.tagline}</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href={site.github} rel="me">View GitHub</a>
+        <a class="btn" href="#projects">See projects</a>
+        {site.resumeUrl ? (
+          <a class="btn" href={site.resumeUrl}>Résumé (PDF)</a>
+        ) : (
+          <span class="btn" aria-disabled="true">Résumé — coming soon</span>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="section" aria-labelledby="featured-title">
+    <div class="container">
+      <header class="section-header">
+        <h2 id="featured-title">Featured projects</h2>
+        <p>The builds I'm proudest of — AI tooling, mobile apps, and games.</p>
+      </header>
+      <ul class="grid grid-featured" role="list">
+        {featured.map((project) => (
+          <li><ProjectCard project={project} /></li>
+        ))}
+      </ul>
+
+      <h3 class="more-title" id="more-title">More projects</h3>
+      <ul class="grid grid-more" role="list" aria-labelledby="more-title">
+        {more.map((project) => (
+          <li><ProjectCard project={project} variant="compact" /></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section id="about" class="section section-alt" aria-labelledby="about-title">
+    <div class="container narrow">
+      <header class="section-header">
+        <h2 id="about-title">About</h2>
+      </header>
+      <div class="prose">
+        <p>
+          I'm a computer science student who learns by building. My senior capstone uses
+          teams of AI agents to plan disaster response on real street maps, and on my own
+          time I build tools for running AI agents, offline-first mobile apps, and games
+          with computer opponents.
+        </p>
+        <p>
+          I care about software that works without fuss: apps that run offline, keep data
+          on the device, and come with tests that prove they do what they say.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section" aria-labelledby="contact-title">
+    <div class="container narrow">
+      <header class="section-header">
+        <h2 id="contact-title">Get in touch</h2>
+        <p>The best way to reach me or see what I'm working on is GitHub.</p>
+      </header>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href={site.github} rel="me">github.com/{site.githubHandle}</a>
+        {site.email && <a class="btn" href={`mailto:${site.email}`}>Email me</a>}
+        {site.resumeUrl ? (
+          <a class="btn" href={site.resumeUrl}>Résumé (PDF)</a>
+        ) : (
+          <span class="btn" aria-disabled="true">Résumé — coming soon</span>
+        )}
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .hero {
+    padding-block: clamp(4rem, 10vw, 7rem) var(--space-12);
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-3);
+  }
+
+  .hero h1 {
+    font-size: clamp(2.5rem, 1.8rem + 3.5vw, 4rem);
+    letter-spacing: -0.02em;
+  }
+
+  .tagline {
+    font-size: clamp(1.15rem, 1rem + 0.6vw, 1.4rem);
+    color: var(--text-muted);
+    max-width: 38ch;
+    margin-top: var(--space-4);
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-8);
+  }
+
+  #contact .hero-actions {
+    margin-top: 0;
+  }
+
+  .grid {
+    display: grid;
+    gap: var(--space-6);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .grid-featured {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  }
+
+  .grid-more {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+    gap: var(--space-4);
+  }
+
+  .more-title {
+    font-size: 1.25rem;
+    margin: var(--space-16) 0 var(--space-6);
+  }
+
+  .section-alt {
+    background: var(--surface);
+    border-block: 1px solid var(--border);
+  }
+
+  .narrow {
+    max-width: 760px;
+  }
+
+  .prose {
+    display: grid;
+    gap: var(--space-4);
+    color: var(--text-muted);
+    font-size: 1.1rem;
+  }
+</style>

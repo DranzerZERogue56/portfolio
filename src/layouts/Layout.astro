@@ -1,0 +1,147 @@
+---
+// Shared page shell: <head>, skip link, header navigation, and footer.
+import "../styles/global.css";
+import { site } from "../data/site";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = `${site.name} — Portfolio`, description = site.description } = Astro.props;
+const year = new Date().getFullYear();
+
+const nav = [
+  { href: "#projects", label: "Projects" },
+  { href: "#about", label: "About" },
+  { href: "#contact", label: "Contact" },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="/">{site.name}</a>
+        <nav aria-label="Main">
+          <ul>
+            {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+            <li><a href={site.github} rel="me">GitHub</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>&copy; {year} {site.name}</p>
+        <p><a href={site.github} rel="me">github.com/{site.githubHandle}</a></p>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .skip-link {
+    position: absolute;
+    left: var(--space-4);
+    top: -3rem;
+    z-index: 100;
+    padding: var(--space-2) var(--space-4);
+    background: var(--accent);
+    color: var(--accent-contrast);
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+  }
+
+  .skip-link:focus {
+    top: var(--space-4);
+  }
+
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    min-height: 3.75rem;
+  }
+
+  .brand {
+    font-weight: 700;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  nav ul {
+    display: flex;
+    gap: var(--space-1);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  nav a {
+    display: block;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  nav a:hover {
+    color: var(--text);
+    background: var(--surface-muted);
+  }
+
+  @media (max-width: 520px) {
+    .brand {
+      font-size: 0.95rem;
+    }
+    nav a {
+      padding: var(--space-2);
+      font-size: 0.875rem;
+    }
+  }
+
+  .site-footer {
+    border-top: 1px solid var(--border);
+    padding-block: var(--space-8);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+
+  .footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-2);
+  }
+</style>
