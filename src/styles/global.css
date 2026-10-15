@@ -30,7 +30,7 @@
   --soon-soft: #fdf1e1;
   /* Page background: a red grid seen through a frosted glass pane.
      --pane tints the glass, --sheen is the light catching its surface. */
-  --grid-line: color-mix(in srgb, var(--brand) 30%, transparent);
+  --grid-line: color-mix(in srgb, var(--brand) 40%, transparent);
   --pane: color-mix(in srgb, var(--bg) 30%, transparent);
   --sheen: rgb(255 255 255 / 0.4);
   --glow: color-mix(in srgb, var(--brand) 14%, transparent);
@@ -44,10 +44,11 @@
   --glass-edge: rgb(255 255 255 / 0.95);
   --glass-sheen: rgb(255 255 255 / 0.75);
   --glass-blur: 6px;
-  /* Soft colour glows behind the project cards. */
-  --glow-1: color-mix(in srgb, #ff2e2e 22%, transparent);
-  --glow-2: color-mix(in srgb, #b00020 18%, transparent);
-  --glow-3: color-mix(in srgb, #5b6170 14%, transparent);
+  /* Soft colour glows behind the project cards. Kept faint on purpose: they
+     should just warm the background, never tint a card red. */
+  --glow-1: color-mix(in srgb, #ff2e2e 9%, transparent);
+  --glow-2: color-mix(in srgb, #b00020 7%, transparent);
+  --glow-3: color-mix(in srgb, #5b6170 8%, transparent);
 
   --radius: 12px;
   --radius-sm: 6px;
@@ -89,7 +90,7 @@
       0 12px 32px -8px rgb(0 0 0 / 0.85);
     --shadow-hover: inset 0 1px 0 rgb(255 255 255 / 0.09), 0 4px 10px rgb(0 0 0 / 0.55),
       0 18px 40px -8px rgb(0 0 0 / 0.9);
-    --grid-line: color-mix(in srgb, var(--brand) 24%, transparent);
+    --grid-line: color-mix(in srgb, var(--brand) 34%, transparent);
     --pane: color-mix(in srgb, var(--bg) 40%, transparent);
     --sheen: rgb(255 255 255 / 0.045);
     --glow: color-mix(in srgb, var(--brand) 18%, transparent);
@@ -98,9 +99,9 @@
     --glass-border: rgb(255 255 255 / 0.08);
     --glass-edge: rgb(255 255 255 / 0.22);
     --glass-sheen: rgb(255 255 255 / 0.08);
-    --glow-1: color-mix(in srgb, #ff2e2e 26%, transparent);
-    --glow-2: color-mix(in srgb, #b00020 34%, transparent);
-    --glow-3: color-mix(in srgb, #e6e8eb 7%, transparent);
+    --glow-1: color-mix(in srgb, #ff2e2e 10%, transparent);
+    --glow-2: color-mix(in srgb, #b00020 12%, transparent);
+    --glow-3: color-mix(in srgb, #e6e8eb 4%, transparent);
   }
 }
 
