@@ -23,6 +23,7 @@ export const featured: Project[] = [
     summary:
       "A local dashboard that runs and coordinates many Claude Code AI agents at once — saved agent profiles, a work queue, and multi-step pipelines that hand work from one agent to the next.",
     tags: ["TypeScript", "Node.js", "Claude Agent SDK", "SQLite", "Multi-agent"],
+    repoNote: "In progress",
   },
   {
     title: "Disaster Response Coordination",
@@ -46,6 +47,7 @@ export const featured: Project[] = [
     summary:
       "A turn-based pixel-art dungeon crawler for phones, played in portrait, with animated creatures per biome and a tap-to-expand minimap.",
     tags: ["Godot 4", "GDScript", "Android", "Roguelike"],
+    repoNote: "In progress",
   },
   {
     title: "Tak",
@@ -75,59 +77,69 @@ export const more: Project[] = [
     summary:
       "A mental-math trainer that drills specific tricks and spaces out reviews based on your own speed and accuracy.",
     tags: ["React Native", "Expo", "SQLite"],
+    repoNote: "In progress",
   },
   {
     title: "Musical Magician",
     summary:
       "An offline desktop app for learning to read sheet music, aimed at organ players — lessons plus quick replayable drills.",
     tags: ["Electron", "React", "VexFlow", "Tone.js"],
+    repoNote: "In progress",
   },
   {
     title: "Knight's Codex",
     summary: "A medieval-themed stretching and recovery app with quests, ranks, and streaks.",
     tags: ["React", "Vite", "PWA", "Vitest"],
+    repoNote: "In progress",
   },
   {
     title: "Brain",
     summary:
       "A local web app for a plain-markdown notes vault, shared live with Obsidian and protected against overwriting outside edits.",
     tags: ["React", "Express", "Markdown"],
+    repoNote: "In progress",
   },
   {
     title: "Kunes Overlay",
     summary:
       "A clean, ad-free view of a car dealer's inventory, plus a price checker that compares listings against other dealers.",
     tags: ["Node.js", "Algolia", "Puppeteer"],
+    repoNote: "In progress",
   },
   {
     title: "canvas-HW",
     summary:
       "A read-only planning dashboard that pulls assignments and due dates from Canvas into a list and two-week calendar.",
     tags: ["Canvas API", "SQLite"],
+    repoNote: "In progress",
   },
   {
     title: "REE-Rolo",
     summary:
       "An Android app that tracks incoming messages and keeps nudging you until you reply.",
     tags: ["Android", "Notifications", "Widgets"],
+    repoNote: "In progress",
   },
   {
     title: "PiP Roleplay",
     summary:
       "A voice-based sales-call trainer with push-to-talk and AI grading against a fixed scoring rubric.",
     tags: ["TypeScript", "Claude Agent SDK", "Voice"],
+    repoNote: "In progress",
   },
   {
     title: "Church Contacts",
     summary:
       "Builds a list of nearby churches from open map data for one-at-a-time outreach, with a keyboard-driven spreadsheet viewer.",
     tags: ["Python", "OpenStreetMap"],
+    repoNote: "In progress",
   },
   {
     title: "Amazon Wishlist Extractor",
     summary:
       "A browser userscript that exports a gift registry, plus a local page for tagging, filtering, and notes.",
     tags: ["JavaScript", "Tampermonkey", "jsdom"],
+    repoNote: "In progress",
   },
   {
     title: "Futuristic UI Mockups",
@@ -139,5 +151,6 @@ export const more: Project[] = [
     title: "Quick Decide",
     summary: "A small local AI model that judges whether a shell command is safe to run without asking.",
     tags: ["Local LLM", "AI safety"],
+    repoNote: "In progress",
   },
 ];

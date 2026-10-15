@@ -50,12 +50,11 @@ const nav = [
       if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
         const root = document.documentElement;
         root.classList.add("anim");
-        // Safety net: if the motion script below never runs (blocked or failed
-        // to load), turn the animations back off so nothing stays hidden.
-        addEventListener("load", () => {
-          setTimeout(() => {
-            if (!root.classList.contains("anim-ready")) root.classList.remove("anim");
-          }, 1000);
+        // Safety net: the motion script below always runs before the browser
+        // finishes reading the page. If it hasn't run by then, it was blocked or
+        // failed, so turn the animations back off and show everything right away.
+        addEventListener("DOMContentLoaded", () => {
+          if (!root.classList.contains("anim-ready")) root.classList.remove("anim");
         });
       }
     </script>
