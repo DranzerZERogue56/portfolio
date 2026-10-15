@@ -6,21 +6,30 @@
   --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-mono: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
 
-  --bg: #f7f7f5;
+  /* "Redline" palette: #070709 black, #1E1F24 charcoal, #B00020 deep red,
+     #FF2E2E bright red, #E6E8EB light grey. Every text pairing below has been
+     checked to be easy to read (contrast of at least 4.5 to 1). */
+  --bg: #e6e8eb;
   --surface: #ffffff;
-  --surface-muted: #efefec;
-  --text: #1a1c1e;
-  --text-muted: #50555c;
-  --border: #dcdcd7;
-  --accent: #1d5fd1;
-  --accent-strong: #154aa6;
-  --accent-contrast: #ffffff;
-  --accent-soft: #e6eefc;
+  --surface-muted: #d9dce0;
+  --text: #1e1f24;
+  --text-muted: #4a4c55;
+  --border: #cdd0d5;
+  /* Red for text and links, and a darker red when hovered. */
+  --accent: #b00020;
+  --accent-strong: #8e001a;
+  --accent-soft: #fbe6e9;
+  /* Red buttons with white text (same in both modes). */
+  --button: #b00020;
+  --button-hover: #8e001a;
+  --button-text: #ffffff;
+  /* The palette's exact red, for decoration only (grid and glow), not text. */
+  --brand: #b00020;
   --soon: #8a4b00;
   --soon-soft: #fdf1e1;
   /* Hero "blueprint" grid + glow (Phase 3 motion) */
-  --grid-line: color-mix(in srgb, var(--accent) 11%, transparent);
-  --glow: color-mix(in srgb, var(--accent) 24%, transparent);
+  --grid-line: color-mix(in srgb, var(--brand) 10%, transparent);
+  --glow: color-mix(in srgb, var(--brand) 14%, transparent);
 
   --radius: 12px;
   --radius-sm: 6px;
@@ -40,22 +49,26 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #111317;
-    --surface: #181b21;
-    --surface-muted: #20242b;
-    --text: #e8eaed;
-    --text-muted: #a3a9b2;
-    --border: #2c313a;
-    --accent: #7aa7ff;
-    --accent-strong: #a3c2ff;
-    --accent-contrast: #0b1220;
-    --accent-soft: #1b2638;
+    --bg: #070709;
+    --surface: #1e1f24;
+    --surface-muted: #2a2c32;
+    --text: #e6e8eb;
+    --text-muted: #a1a4ad;
+    --border: #2e3038;
+    /* Slightly lighter than #FF2E2E so link text stays easy to read on the
+       charcoal cards (pure #FF2E2E falls just short there). */
+    --accent: #ff4a4a;
+    --accent-strong: #ff7a7a;
+    --accent-soft: #3a1418;
+    --button: #b00020;
+    --button-hover: #d0102a;
+    --brand: #ff2e2e;
     --soon: #f3b366;
     --soon-soft: #2e2416;
-    --shadow: 0 1px 2px rgb(0 0 0 / 0.3);
-    --shadow-hover: 0 8px 24px rgb(0 0 0 / 0.4);
-    --grid-line: color-mix(in srgb, var(--accent) 14%, transparent);
-    --glow: color-mix(in srgb, var(--accent) 30%, transparent);
+    --shadow: 0 1px 2px rgb(0 0 0 / 0.5);
+    --shadow-hover: 0 8px 24px rgb(0 0 0 / 0.6);
+    --grid-line: color-mix(in srgb, var(--brand) 12%, transparent);
+    --glow: color-mix(in srgb, var(--brand) 18%, transparent);
   }
 }
 
@@ -181,15 +194,15 @@ a:hover {
 }
 
 .btn-primary {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--accent-contrast);
+  background: var(--button);
+  border-color: var(--button);
+  color: var(--button-text);
 }
 
 .btn-primary:hover {
-  background: var(--accent-strong);
-  border-color: var(--accent-strong);
-  color: var(--accent-contrast);
+  background: var(--button-hover);
+  border-color: var(--button-hover);
+  color: var(--button-text);
 }
 
 .btn[aria-disabled="true"] {
