@@ -43,12 +43,23 @@ import { featured, more } from "../data/projects";
         ))}
       </ul>
 
-      <h3 class="more-title reveal" id="more-title">More projects</h3>
-      <ul class="grid grid-more" role="list" aria-labelledby="more-title">
-        {more.map((project, i) => (
-          <li class="reveal" style={`--i: ${i % 4}`}><ProjectCard project={project} variant="compact" /></li>
-        ))}
-      </ul>
+      {/* Closed by default to keep the page short. Built-in <details>, so it
+          works without JavaScript and find-in-page (Ctrl+F) opens it. */}
+      <details class="more reveal">
+        <summary>
+          <h3 class="more-title" id="more-title">More projects</h3>
+          <span class="more-count">{more.length} projects</span>
+          <svg class="more-chevron" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </summary>
+        <ul class="grid grid-more" role="list" aria-labelledby="more-title">
+          {more.map((project, i) => (
+            <li class="reveal" style={`--i: ${i % 4}`}><ProjectCard project={project} variant="compact" /></li>
+          ))}
+        </ul>
+      </details>
     </div>
   </section>
 
@@ -248,9 +259,58 @@ import { featured, more } from "../data/projects";
     gap: var(--space-4);
   }
 
+  /* "More projects" bar: the whole row is the button that opens the list. */
+  .more {
+    margin-top: var(--space-16);
+  }
+
+  .more summary {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: 3.5rem;
+    padding: var(--space-3) var(--space-6);
+    border: 1px solid var(--glass-border);
+    border-top-color: var(--glass-edge);
+    border-radius: var(--radius);
+    background: var(--glass-solid);
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    list-style: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .more summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .more summary:hover {
+    border-color: var(--text-muted);
+    box-shadow: var(--shadow-hover);
+  }
+
   .more-title {
     font-size: 1.25rem;
-    margin: var(--space-16) 0 var(--space-6);
+    margin-right: auto;
+  }
+
+  .more-count {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+
+  .more-chevron {
+    flex-shrink: 0;
+    color: var(--text-muted);
+    transition: transform 0.2s ease;
+  }
+
+  .more[open] .more-chevron {
+    transform: rotate(180deg);
+  }
+
+  .more[open] summary {
+    margin-bottom: var(--space-6);
   }
 
   /* A frosted band: the grid shows faintly through it. */

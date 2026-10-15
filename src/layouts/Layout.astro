@@ -87,6 +87,11 @@ const nav = [
     </footer>
 
     <script>
+      // Printing: open any closed show/hide sections so nothing is left out.
+      addEventListener("beforeprint", () => {
+        document.querySelectorAll("details:not([open])").forEach((d) => d.setAttribute("open", ""));
+      });
+
       // Phase 3 motion. Only runs when the visitor is OK with motion; otherwise
       // the page stays exactly as the HTML/CSS render it, fully visible.
       const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
