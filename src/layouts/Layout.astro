@@ -10,6 +10,8 @@ interface Props {
 
 const { title = `${site.name} — Portfolio`, description = site.description } = Astro.props;
 const year = new Date().getFullYear();
+// Link previews (LinkedIn, Slack, texts) need full addresses, not "/og-image.png".
+const ogImage = new URL("/og-image.png", site.url).href;
 
 const nav = [
   { href: "#projects", label: "Projects" },
@@ -24,9 +26,20 @@ const nav = [
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <link rel="canonical" href={site.url} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={site.url} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${site.name} — ${site.tagline}`} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
     <meta name="theme-color" content="#f7f7f5" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#111317" media="(prefers-color-scheme: dark)" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -79,9 +92,13 @@ const nav = [
       const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const finePointer = window.matchMedia("(pointer: fine)").matches;
 
-      if (!calm) {
-        const root = document.documentElement;
-        root.classList.add("anim", "anim-ready");
+      const root = document.documentElement;
+
+      // Only run if the <head> script switched animations on and the safety net
+      // hasn't switched them off again. If this script arrives that late, the
+      // page is already fully shown, and hiding it again would make it flash.
+      if (!calm && root.classList.contains("anim")) {
+        root.classList.add("anim-ready");
 
         // The name always sits at the top of the page, so start its rise right
         // away. (Watching it for scrolling doesn't work: while it's fully masked
@@ -246,7 +263,15 @@ const nav = [
   .footer-inner {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     justify-content: space-between;
     gap: var(--space-2);
+  }
+
+  /* Same 44px tap height as the other links. */
+  .footer-inner a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
   }
 </style>

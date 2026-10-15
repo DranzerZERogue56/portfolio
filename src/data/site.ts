@@ -5,6 +5,8 @@ export const site = {
   tagline: "Computer science student & builder — AI tools, mobile apps, and games.",
   description:
     "Ben Wrenn is a computer science student who builds AI tools, mobile apps, and games.",
+  // The live address. Used for the canonical link and link previews.
+  url: "https://dranzer-portfolio.pages.dev/",
   github: "https://github.com/DranzerZERogue56",
   githubHandle: "DranzerZERogue56",
   // Set to a path like "/resume.pdf" once the PDF is in public/. Until then the

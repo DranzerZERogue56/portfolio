@@ -1,11 +1,14 @@
 // All project content lives here. To change a card, edit its entry.
 // Only add a `repo` link when the GitHub repo is public — private repos get no link.
+// `repoNote` is optional: a short line shown where the code link would be, to say
+// why there isn't one (e.g. "Private repo"). Leave it out to show nothing.
 
 export interface Project {
   title: string;
   summary: string;
   tags: string[];
   repo?: string;
+  repoNote?: string;
   demo?: string;
   demoLabel?: string;
   note?: string;
