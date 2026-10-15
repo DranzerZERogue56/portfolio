@@ -34,6 +34,20 @@
   --sheen: rgb(255 255 255 / 0.4);
   --glow: color-mix(in srgb, var(--brand) 14%, transparent);
 
+  /* Glass project cards. --glass-fill is see-through; --glass-solid is the
+     fallback when the browser can't blur or the visitor asks for less
+     transparency. --glass-edge is the brighter top edge where light catches. */
+  --glass-fill: rgb(255 255 255 / 0.42);
+  --glass-solid: rgb(255 255 255 / 0.94);
+  --glass-border: rgb(30 31 36 / 0.12);
+  --glass-edge: rgb(255 255 255 / 0.95);
+  --glass-sheen: rgb(255 255 255 / 0.75);
+  --glass-blur: 6px;
+  /* Soft colour glows behind the project cards. */
+  --glow-1: color-mix(in srgb, #ff2e2e 22%, transparent);
+  --glow-2: color-mix(in srgb, #b00020 18%, transparent);
+  --glow-3: color-mix(in srgb, #5b6170 14%, transparent);
+
   --radius: 12px;
   --radius-sm: 6px;
   /* Cards sit in front of the glass, so they get a clear lift. */
@@ -78,6 +92,21 @@
     --pane: color-mix(in srgb, var(--bg) 40%, transparent);
     --sheen: rgb(255 255 255 / 0.045);
     --glow: color-mix(in srgb, var(--brand) 18%, transparent);
+    --glass-fill: rgb(30 31 36 / 0.4);
+    --glass-solid: rgb(30 31 36 / 0.94);
+    --glass-border: rgb(255 255 255 / 0.08);
+    --glass-edge: rgb(255 255 255 / 0.22);
+    --glass-sheen: rgb(255 255 255 / 0.08);
+    --glow-1: color-mix(in srgb, #ff2e2e 26%, transparent);
+    --glow-2: color-mix(in srgb, #b00020 34%, transparent);
+    --glow-3: color-mix(in srgb, #e6e8eb 7%, transparent);
+  }
+}
+
+/* Smaller blur on phones: less work while scrolling, same look at that size. */
+@media (max-width: 640px) {
+  :root {
+    --glass-blur: 5px;
   }
 }
 

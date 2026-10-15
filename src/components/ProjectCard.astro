@@ -47,42 +47,84 @@ const Heading = variant === "featured" ? "h3" : "h4";
 </article>
 
 <style>
+  /* Glossy glass: a see-through fill that blurs what's behind it, a thin
+     border that's brighter along the top (light catching the edge), and a
+     soft diagonal sheen across the top-left corner. */
   .card {
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
     height: 100%;
     padding: var(--space-6);
-    background: var(--surface);
-    border: 1px solid var(--border);
+    background:
+      linear-gradient(140deg, var(--glass-sheen) 0%, transparent 38%),
+      var(--glass-solid);
+    border: 1px solid var(--glass-border);
+    border-top-color: var(--glass-edge);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     transition: box-shadow 0.2s ease, border-color 0.2s ease;
   }
 
-  /* No lift on hover: the card itself isn't a link, so it shouldn't act like one. */
-  .card:hover {
-    box-shadow: var(--shadow-hover);
+  /* Only go see-through where the browser can blur behind the card. Otherwise
+     the near-solid fill above stays, so it still clearly reads as a card.
+     Safari's "-webkit-" version needs its own block: the build tool drops it
+     when it sits next to the standard one. */
+  @supports (backdrop-filter: blur(1px)) {
+    .card {
+      background:
+        linear-gradient(140deg, var(--glass-sheen) 0%, transparent 38%),
+        var(--glass-fill);
+      backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+    }
   }
 
+  @supports (-webkit-backdrop-filter: blur(1px)) {
+    .card {
+      background:
+        linear-gradient(140deg, var(--glass-sheen) 0%, transparent 38%),
+        var(--glass-fill);
+      -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+    }
+  }
+
+  /* No lift on hover: the card itself isn't a link, so it shouldn't act like one.
+     Just a slightly deeper shadow and a brighter edge. */
+  .card:hover {
+    box-shadow: var(--shadow-hover);
+    border-color: color-mix(in srgb, var(--glass-edge) 60%, var(--glass-border));
+    border-top-color: var(--glass-edge);
+  }
+
+  /* Smaller cards: same glass, a quieter sheen and a lighter shadow. */
   .card.compact {
     gap: var(--space-3);
     padding: var(--space-4) var(--space-6);
+    background-image: linear-gradient(180deg, color-mix(in srgb, var(--glass-edge) 18%, transparent), transparent 45%);
   }
 
-  .card.compact:hover {
-    border-color: var(--text-muted);
-  }
-
-  /* The reserved slot is see-through glass, so it reads as "not filled yet". */
+  /* The reserved slot stays clearly different: dashed, thinner glass, no shine. */
   .card.soon {
     border-style: dashed;
-    background: color-mix(in srgb, var(--surface) 35%, transparent);
+    border-color: var(--text-muted);
+    background: color-mix(in srgb, var(--surface) 30%, transparent);
     box-shadow: none;
   }
 
   .card.soon:hover {
     box-shadow: none;
+    border-color: var(--text-muted);
+  }
+
+  /* Visitors who ask for less transparency get solid cards. */
+  @media (prefers-reduced-transparency: reduce) {
+    .card,
+    .card.compact,
+    .card.soon {
+      background: var(--surface);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
   }
 
   .card-top {
