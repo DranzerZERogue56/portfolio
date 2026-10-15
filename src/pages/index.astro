@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 import { site } from "../data/site";
 import { featured, more } from "../data/projects";
+import { intro, facts } from "../data/about";
 ---
 
 <Layout>
@@ -64,21 +65,30 @@ import { featured, more } from "../data/projects";
   </section>
 
   <section id="about" class="section section-alt" aria-labelledby="about-title">
-    <div class="container narrow">
+    <div class="container">
       <header class="section-header reveal">
         <h2 id="about-title">About</h2>
       </header>
       <div class="prose reveal" style="--i: 1">
-        <p>
-          I'm a computer science student who learns by building. My senior capstone uses
-          teams of AI agents to plan disaster response on real street maps, and on my own
-          time I build tools for running AI agents, offline-first mobile apps, and games
-          with computer opponents.
-        </p>
-        <p>
-          I care about software that works without fuss: apps that run offline, keep data
-          on the device, and come with tests that prove they do what they say.
-        </p>
+        {intro.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+      <div class="about-facts">
+        {facts.map((group, i) => (
+          <div class="fact-group reveal" style={`--i: ${i % 2}`}>
+            <h3>{group.heading}</h3>
+            <ul role="list">
+              {group.items.map((item) => (
+                <li>
+                  <p class="fact-title">
+                    <span>{item.title}</span>
+                    {item.when && <span class="fact-when">{item.when}</span>}
+                  </p>
+                  {item.detail && <p class="fact-detail">{item.detail}</p>}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
     </div>
   </section>
@@ -328,5 +338,56 @@ import { featured, more } from "../data/projects";
     gap: var(--space-4);
     font-size: 1.1rem;
     max-width: 65ch;
+  }
+
+  /* Experience / Education / Skills / Leadership: two columns on wide
+     screens, one on phones. */
+  .about-facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+    gap: var(--space-6);
+    margin-top: var(--space-12);
+  }
+
+  .fact-group {
+    padding: var(--space-6);
+    border: 1px solid var(--glass-border);
+    border-top-color: var(--glass-edge);
+    border-radius: var(--radius);
+    background: var(--glass-solid);
+    box-shadow: var(--shadow);
+  }
+
+  .fact-group h3 {
+    font-size: 1.05rem;
+    margin-bottom: var(--space-4);
+  }
+
+  .fact-group ul {
+    display: grid;
+    gap: var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .fact-title {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0 var(--space-3);
+    font-weight: 600;
+  }
+
+  .fact-when {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    font-weight: 400;
+    white-space: nowrap;
+  }
+
+  .fact-detail {
+    color: var(--text-muted);
+    font-size: 0.95rem;
   }
 </style>
