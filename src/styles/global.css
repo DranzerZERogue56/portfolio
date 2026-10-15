@@ -8,8 +8,9 @@
 
   /* "Redline" palette: #070709 black, #1E1F24 charcoal, #B00020 deep red,
      #FF2E2E bright red, #E6E8EB light grey. Every text pairing below has been
-     checked to be easy to read (contrast of at least 4.5 to 1). */
-  --bg: #e6e8eb;
+     checked to be easy to read (contrast of at least 4.5 to 1).
+     The page backgrounds are the palette greys lifted 5% lighter. */
+  --bg: #f4f5f6;
   --surface: #ffffff;
   --surface-muted: #d9dce0;
   --text: #1e1f24;
@@ -67,7 +68,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #070709;
+    --bg: #121217;
     --surface: #1e1f24;
     --surface-muted: #2a2c32;
     --text: #e6e8eb;
