@@ -18,6 +18,9 @@
   --accent-soft: #e6eefc;
   --soon: #8a4b00;
   --soon-soft: #fdf1e1;
+  /* Hero "blueprint" grid + glow (Phase 3 motion) */
+  --grid-line: color-mix(in srgb, var(--accent) 11%, transparent);
+  --glow: color-mix(in srgb, var(--accent) 24%, transparent);
 
   --radius: 12px;
   --radius-sm: 6px;
@@ -51,6 +54,8 @@
     --soon-soft: #2e2416;
     --shadow: 0 1px 2px rgb(0 0 0 / 0.3);
     --shadow-hover: 0 8px 24px rgb(0 0 0 / 0.4);
+    --grid-line: color-mix(in srgb, var(--accent) 14%, transparent);
+    --glow: color-mix(in srgb, var(--accent) 30%, transparent);
   }
 }
 
@@ -208,4 +213,49 @@ a:hover {
   border-radius: 999px;
   background: var(--surface-muted);
   color: var(--text-muted);
+}
+
+/* ---------------------------------------------------------------------------
+   Phase 3 motion: scroll reveals + magnetic buttons.
+   Everything is fully visible by default. The animations only switch on when
+   JS adds `.anim` to <html>, and JS only does that when the visitor hasn't
+   asked for reduced motion. So no-JS and reduced-motion both get the plain,
+   complete page with nothing hidden.
+--------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  html.anim .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: calc(var(--i, 0) * 70ms);
+    will-change: opacity, transform;
+  }
+
+  html.anim .reveal.in {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Name rises out from behind a mask — the signature moment. */
+  html.anim .reveal-mask {
+    clip-path: inset(0 0 110% 0);
+    transform: translateY(0.4em);
+    transition:
+      clip-path 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  html.anim .reveal-mask.in {
+    clip-path: inset(0 0 -0.15em 0);
+    transform: none;
+  }
+
+  /* Magnetic nudge set from JS (mouse only). */
+  html.anim .magnetic {
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+      background-color 0.15s ease, border-color 0.15s ease;
+    transform: translate(var(--mag-x, 0), var(--mag-y, 0));
+  }
 }

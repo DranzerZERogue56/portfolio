@@ -29,6 +29,13 @@ const nav = [
     <meta property="og:type" content="website" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>{title}</title>
+    <script is:inline>
+      // Switch on the entrance animations before first paint so content never
+      // flashes visible-then-hidden. Skipped if the visitor wants reduced motion.
+      if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        document.documentElement.classList.add("anim");
+      }
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -55,6 +62,67 @@ const nav = [
         <p><a href={site.github} rel="me">github.com/{site.githubHandle}</a></p>
       </div>
     </footer>
+
+    <script>
+      // Phase 3 motion. Only runs when the visitor is OK with motion; otherwise
+      // the page stays exactly as the HTML/CSS render it, fully visible.
+      const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const finePointer = window.matchMedia("(pointer: fine)").matches;
+
+      if (!calm) {
+        const root = document.documentElement;
+        root.classList.add("anim");
+
+        // Reveal sections and cards as they scroll into view.
+        const items = document.querySelectorAll(".reveal, .reveal-mask");
+        if ("IntersectionObserver" in window) {
+          const io = new IntersectionObserver(
+            (entries) => {
+              for (const entry of entries) {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add("in");
+                  io.unobserve(entry.target);
+                }
+              }
+            },
+            { rootMargin: "0px 0px -8% 0px", threshold: 0.12 }
+          );
+          items.forEach((el) => io.observe(el));
+        } else {
+          items.forEach((el) => el.classList.add("in"));
+        }
+
+        // Soft light in the hero follows the cursor.
+        const hero = document.querySelector("[data-hero]");
+        if (hero && finePointer) {
+          hero.addEventListener("pointermove", (e) => {
+            const r = hero.getBoundingClientRect();
+            const x = ((e.clientX - r.left) / r.width) * 100;
+            const y = ((e.clientY - r.top) / r.height) * 100;
+            hero.style.setProperty("--mx", x + "%");
+            hero.style.setProperty("--my", y + "%");
+          });
+        }
+
+        // Magnetic buttons: a gentle pull toward the cursor (mouse only).
+        if (finePointer) {
+          document.querySelectorAll(".magnetic").forEach((btn) => {
+            const el = btn;
+            el.addEventListener("pointermove", (e) => {
+              const r = el.getBoundingClientRect();
+              const mx = (e.clientX - (r.left + r.width / 2)) * 0.25;
+              const my = (e.clientY - (r.top + r.height / 2)) * 0.35;
+              el.style.setProperty("--mag-x", mx.toFixed(1) + "px");
+              el.style.setProperty("--mag-y", my.toFixed(1) + "px");
+            });
+            el.addEventListener("pointerleave", () => {
+              el.style.setProperty("--mag-x", "0px");
+              el.style.setProperty("--mag-y", "0px");
+            });
+          });
+        }
+      }
+    </script>
   </body>
 </html>
 

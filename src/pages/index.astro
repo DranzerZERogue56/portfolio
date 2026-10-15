@@ -6,13 +6,17 @@ import { featured, more } from "../data/projects";
 ---
 
 <Layout>
-  <section class="hero" aria-labelledby="hero-title">
+  <section class="hero" aria-labelledby="hero-title" data-hero>
+    <div class="hero-bg" aria-hidden="true">
+      <div class="hero-grid"></div>
+      <div class="hero-glow"></div>
+    </div>
     <div class="container">
-      <p class="eyebrow">Portfolio</p>
-      <h1 id="hero-title">{site.name}</h1>
-      <p class="tagline">{site.tagline}</p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href={site.github} rel="me">View GitHub</a>
+      <p class="eyebrow reveal" style="--i: 0">Portfolio</p>
+      <h1 id="hero-title" class="reveal-mask">{site.name}</h1>
+      <p class="tagline reveal" style="--i: 1">{site.tagline}</p>
+      <div class="hero-actions reveal" style="--i: 2">
+        <a class="btn btn-primary magnetic" href={site.github} rel="me">View GitHub</a>
         <a class="btn" href="#projects">See projects</a>
         {site.resumeUrl ? (
           <a class="btn" href={site.resumeUrl}>Résumé (PDF)</a>
@@ -25,20 +29,20 @@ import { featured, more } from "../data/projects";
 
   <section id="projects" class="section" aria-labelledby="featured-title">
     <div class="container">
-      <header class="section-header">
+      <header class="section-header reveal">
         <h2 id="featured-title">Featured projects</h2>
         <p>The builds I'm proudest of — AI tooling, mobile apps, and games.</p>
       </header>
       <ul class="grid grid-featured" role="list">
-        {featured.map((project) => (
-          <li><ProjectCard project={project} /></li>
+        {featured.map((project, i) => (
+          <li class="reveal" style={`--i: ${i % 3}`}><ProjectCard project={project} /></li>
         ))}
       </ul>
 
-      <h3 class="more-title" id="more-title">More projects</h3>
+      <h3 class="more-title reveal" id="more-title">More projects</h3>
       <ul class="grid grid-more" role="list" aria-labelledby="more-title">
-        {more.map((project) => (
-          <li><ProjectCard project={project} variant="compact" /></li>
+        {more.map((project, i) => (
+          <li class="reveal" style={`--i: ${i % 4}`}><ProjectCard project={project} variant="compact" /></li>
         ))}
       </ul>
     </div>
@@ -46,10 +50,10 @@ import { featured, more } from "../data/projects";
 
   <section id="about" class="section section-alt" aria-labelledby="about-title">
     <div class="container narrow">
-      <header class="section-header">
+      <header class="section-header reveal">
         <h2 id="about-title">About</h2>
       </header>
-      <div class="prose">
+      <div class="prose reveal" style="--i: 1">
         <p>
           I'm a computer science student who learns by building. My senior capstone uses
           teams of AI agents to plan disaster response on real street maps, and on my own
@@ -66,12 +70,12 @@ import { featured, more } from "../data/projects";
 
   <section id="contact" class="section" aria-labelledby="contact-title">
     <div class="container narrow">
-      <header class="section-header">
+      <header class="section-header reveal">
         <h2 id="contact-title">Get in touch</h2>
         <p>The best way to reach me or see what I'm working on is GitHub.</p>
       </header>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href={site.github} rel="me">github.com/{site.githubHandle}</a>
+      <div class="hero-actions reveal" style="--i: 1">
+        <a class="btn btn-primary magnetic" href={site.github} rel="me">github.com/{site.githubHandle}</a>
         {site.email && <a class="btn" href={`mailto:${site.email}`}>Email me</a>}
         {site.resumeUrl ? (
           <a class="btn" href={site.resumeUrl}>Résumé (PDF)</a>
@@ -85,7 +89,58 @@ import { featured, more } from "../data/projects";
 
 <style>
   .hero {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
     padding-block: clamp(4rem, 10vw, 7rem) var(--space-12);
+  }
+
+  /* Blueprint grid + a soft light that follows the cursor (set via --mx/--my). */
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: -2px;
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 46px 46px;
+    /* Fade the grid out toward the edges so it never looks like a hard table. */
+    -webkit-mask-image: radial-gradient(130% 115% at 20% 0%, #000 35%, transparent 78%);
+    mask-image: radial-gradient(130% 115% at 20% 0%, #000 35%, transparent 78%);
+  }
+
+  .hero-glow {
+    position: absolute;
+    inset: -30%;
+    background: radial-gradient(
+      420px circle at var(--mx, 25%) var(--my, 28%),
+      var(--glow),
+      transparent 62%
+    );
+    opacity: 0.9;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-glow {
+      animation: glow-drift 14s ease-in-out infinite alternate;
+    }
+  }
+
+  /* Idle drift when the cursor isn't moving the glow (vars stay at defaults). */
+  @keyframes glow-drift {
+    from {
+      transform: translate3d(-3%, -2%, 0);
+    }
+    to {
+      transform: translate3d(4%, 3%, 0);
+    }
   }
 
   .eyebrow {
