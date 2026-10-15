@@ -27,14 +27,18 @@
   --brand: #b00020;
   --soon: #8a4b00;
   --soon-soft: #fdf1e1;
-  /* Hero "blueprint" grid + glow (Phase 3 motion) */
-  --grid-line: color-mix(in srgb, var(--brand) 10%, transparent);
+  /* Page background: a red grid seen through a frosted glass pane.
+     --pane tints the glass, --sheen is the light catching its surface. */
+  --grid-line: color-mix(in srgb, var(--brand) 30%, transparent);
+  --pane: color-mix(in srgb, var(--bg) 30%, transparent);
+  --sheen: rgb(255 255 255 / 0.4);
   --glow: color-mix(in srgb, var(--brand) 14%, transparent);
 
   --radius: 12px;
   --radius-sm: 6px;
-  --shadow: 0 1px 2px rgb(0 0 0 / 0.05), 0 4px 16px rgb(0 0 0 / 0.04);
-  --shadow-hover: 0 2px 4px rgb(0 0 0 / 0.06), 0 10px 28px rgb(0 0 0 / 0.08);
+  /* Cards sit in front of the glass, so they get a clear lift. */
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.06), 0 8px 24px -6px rgb(0 0 0 / 0.12);
+  --shadow-hover: 0 2px 4px rgb(0 0 0 / 0.08), 0 14px 32px -6px rgb(0 0 0 / 0.18);
 
   --max-width: 1100px;
   --space-1: 0.25rem;
@@ -65,9 +69,14 @@
     --brand: #ff2e2e;
     --soon: #f3b366;
     --soon-soft: #2e2416;
-    --shadow: 0 1px 2px rgb(0 0 0 / 0.5);
-    --shadow-hover: 0 8px 24px rgb(0 0 0 / 0.6);
-    --grid-line: color-mix(in srgb, var(--brand) 12%, transparent);
+    /* A thin light line along the top edge, plus a deep shadow underneath. */
+    --shadow: inset 0 1px 0 rgb(255 255 255 / 0.06), 0 2px 6px rgb(0 0 0 / 0.5),
+      0 12px 32px -8px rgb(0 0 0 / 0.85);
+    --shadow-hover: inset 0 1px 0 rgb(255 255 255 / 0.09), 0 4px 10px rgb(0 0 0 / 0.55),
+      0 18px 40px -8px rgb(0 0 0 / 0.9);
+    --grid-line: color-mix(in srgb, var(--brand) 24%, transparent);
+    --pane: color-mix(in srgb, var(--bg) 40%, transparent);
+    --sheen: rgb(255 255 255 / 0.045);
     --glow: color-mix(in srgb, var(--brand) 18%, transparent);
   }
 }

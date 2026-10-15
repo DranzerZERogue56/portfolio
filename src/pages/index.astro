@@ -8,7 +8,6 @@ import { featured, more } from "../data/projects";
 <Layout>
   <section class="hero" aria-labelledby="hero-title" data-hero>
     <div class="hero-bg" aria-hidden="true">
-      <div class="hero-grid"></div>
       <div class="hero-glow"></div>
     </div>
     <div class="container">
@@ -95,25 +94,14 @@ import { featured, more } from "../data/projects";
     padding-block: clamp(4rem, 10vw, 7rem) var(--space-12);
   }
 
-  /* Blueprint grid + a soft light that follows the cursor (set via --mx/--my). */
+  /* A soft light that follows the cursor (set via --mx/--my). The grid itself
+     now sits behind the whole page (see Layout.astro). */
   .hero-bg {
     position: absolute;
     inset: 0;
     z-index: -1;
     pointer-events: none;
     overflow: hidden;
-  }
-
-  .hero-grid {
-    position: absolute;
-    inset: -2px;
-    background-image:
-      linear-gradient(var(--grid-line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-    background-size: 46px 46px;
-    /* Fade the grid out toward the edges so it never looks like a hard table. */
-    -webkit-mask-image: radial-gradient(130% 115% at 20% 0%, #000 35%, transparent 78%);
-    mask-image: radial-gradient(130% 115% at 20% 0%, #000 35%, transparent 78%);
   }
 
   .hero-glow {
@@ -197,8 +185,9 @@ import { featured, more } from "../data/projects";
     margin: var(--space-16) 0 var(--space-6);
   }
 
+  /* A frosted band: the grid shows faintly through it. */
   .section-alt {
-    background: var(--surface);
+    background: color-mix(in srgb, var(--surface) 60%, transparent);
     border-block: 1px solid var(--border);
   }
 

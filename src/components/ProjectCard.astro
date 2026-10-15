@@ -68,17 +68,16 @@ const Heading = variant === "featured" ? "h3" : "h4";
   .card.compact {
     gap: var(--space-3);
     padding: var(--space-4) var(--space-6);
-    box-shadow: none;
   }
 
   .card.compact:hover {
     border-color: var(--text-muted);
-    box-shadow: none;
   }
 
+  /* The reserved slot is see-through glass, so it reads as "not filled yet". */
   .card.soon {
     border-style: dashed;
-    background: transparent;
+    background: color-mix(in srgb, var(--surface) 35%, transparent);
     box-shadow: none;
   }
 

@@ -60,6 +60,7 @@ const nav = [
     </script>
   </head>
   <body>
+    <div class="backdrop" aria-hidden="true"></div>
     <a class="skip-link" href="#main">Skip to content</a>
 
     <header class="site-header">
@@ -163,6 +164,43 @@ const nav = [
 </html>
 
 <style>
+  /* The red grid behind the whole page, seen through frosted glass. It stays
+     put while the page scrolls. The grid is softened with a small blur and the
+     glass is a light tint plus a diagonal sheen, so content in front pops. */
+  .backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .backdrop::before {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 46px 46px;
+    filter: blur(0.8px);
+  }
+
+  .backdrop::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(115deg, var(--sheen) 0%, transparent 32%, transparent 68%, var(--sheen) 100%),
+      var(--pane);
+  }
+
+  @media print {
+    .backdrop {
+      display: none;
+    }
+  }
+
   .skip-link {
     position: absolute;
     left: var(--space-4);
@@ -183,8 +221,8 @@ const nav = [
     position: sticky;
     top: 0;
     z-index: 10;
-    background: color-mix(in srgb, var(--bg) 88%, transparent);
-    backdrop-filter: blur(8px);
+    background: color-mix(in srgb, var(--bg) 72%, transparent);
+    backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
   }
 
