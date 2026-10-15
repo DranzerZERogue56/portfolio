@@ -92,14 +92,17 @@ body {
 
 h1,
 h2,
-h3 {
+h3,
+h4 {
   line-height: 1.2;
   letter-spacing: -0.01em;
   margin: 0;
+  text-wrap: balance;
 }
 
 p {
   margin: 0;
+  text-wrap: pretty;
 }
 
 a {
@@ -193,6 +196,12 @@ a:hover {
   border-style: dashed;
   color: var(--text-muted);
   cursor: not-allowed;
+}
+
+/* The greyed-out button shouldn't react to the mouse like a real one. */
+.btn[aria-disabled="true"]:hover {
+  color: var(--text-muted);
+  border-color: var(--border);
   transform: none;
 }
 
@@ -227,10 +236,9 @@ a:hover {
     opacity: 0;
     transform: translateY(18px);
     transition:
-      opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-    transition-delay: calc(var(--i, 0) * 70ms);
-    will-change: opacity, transform;
+      opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: calc(var(--i, 0) * 60ms);
   }
 
   html.anim .reveal.in {
@@ -243,8 +251,8 @@ a:hover {
     clip-path: inset(0 0 110% 0);
     transform: translateY(0.4em);
     transition:
-      clip-path 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-      transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+      clip-path 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   html.anim .reveal-mask.in {
@@ -257,5 +265,15 @@ a:hover {
     transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
       background-color 0.15s ease, border-color 0.15s ease;
     transform: translate(var(--mag-x, 0), var(--mag-y, 0));
+  }
+}
+
+/* Printing: show everything, even parts the visitor never scrolled to. */
+@media print {
+  html.anim .reveal,
+  html.anim .reveal-mask {
+    opacity: 1 !important;
+    clip-path: none !important;
+    transform: none !important;
   }
 }

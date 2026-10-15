@@ -27,13 +27,23 @@ const nav = [
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#f7f7f5" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#111317" media="(prefers-color-scheme: dark)" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>{title}</title>
     <script is:inline>
       // Switch on the entrance animations before first paint so content never
       // flashes visible-then-hidden. Skipped if the visitor wants reduced motion.
       if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        document.documentElement.classList.add("anim");
+        const root = document.documentElement;
+        root.classList.add("anim");
+        // Safety net: if the motion script below never runs (blocked or failed
+        // to load), turn the animations back off so nothing stays hidden.
+        addEventListener("load", () => {
+          setTimeout(() => {
+            if (!root.classList.contains("anim-ready")) root.classList.remove("anim");
+          }, 1000);
+        });
       }
     </script>
   </head>
@@ -71,10 +81,20 @@ const nav = [
 
       if (!calm) {
         const root = document.documentElement;
-        root.classList.add("anim");
+        root.classList.add("anim", "anim-ready");
+
+        // The name always sits at the top of the page, so start its rise right
+        // away. (Watching it for scrolling doesn't work: while it's fully masked
+        // the browser treats it as not on screen, so it would never appear.)
+        // Waiting two frames lets the hidden starting state paint first.
+        requestAnimationFrame(() =>
+          requestAnimationFrame(() =>
+            document.querySelectorAll(".reveal-mask").forEach((el) => el.classList.add("in"))
+          )
+        );
 
         // Reveal sections and cards as they scroll into view.
-        const items = document.querySelectorAll(".reveal, .reveal-mask");
+        const items = document.querySelectorAll(".reveal");
         if ("IntersectionObserver" in window) {
           const io = new IntersectionObserver(
             (entries) => {
@@ -164,6 +184,7 @@ const nav = [
     font-weight: 700;
     color: var(--text);
     text-decoration: none;
+    white-space: nowrap;
   }
 
   nav ul {
@@ -174,9 +195,12 @@ const nav = [
     padding: 0;
   }
 
+  /* At least 44px tall so the links are easy to tap. */
   nav a {
-    display: block;
-    padding: var(--space-2) var(--space-3);
+    display: flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 0 var(--space-3);
     border-radius: var(--radius-sm);
     color: var(--text-muted);
     font-size: 0.95rem;
@@ -190,12 +214,25 @@ const nav = [
   }
 
   @media (max-width: 520px) {
+    .header-inner {
+      gap: var(--space-3);
+    }
     .brand {
       font-size: 0.95rem;
     }
+    nav ul {
+      gap: 0;
+    }
     nav a {
-      padding: var(--space-2);
+      padding: 0 var(--space-2);
       font-size: 0.875rem;
+    }
+  }
+
+  /* Small phones: tighten the links so the name and all four links fit on one line. */
+  @media (max-width: 400px) {
+    nav a {
+      padding: 0 0.3rem;
     }
   }
 

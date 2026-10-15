@@ -56,12 +56,12 @@ const Heading = variant === "featured" ? "h3" : "h4";
     border: 1px solid var(--border);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
-    transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
   }
 
+  /* No lift on hover: the card itself isn't a link, so it shouldn't act like one. */
   .card:hover {
     box-shadow: var(--shadow-hover);
-    transform: translateY(-2px);
   }
 
   .card.compact {
@@ -73,7 +73,6 @@ const Heading = variant === "featured" ? "h3" : "h4";
   .card.compact:hover {
     border-color: var(--text-muted);
     box-shadow: none;
-    transform: none;
   }
 
   .card.soon {
@@ -83,7 +82,7 @@ const Heading = variant === "featured" ? "h3" : "h4";
   }
 
   .card.soon:hover {
-    transform: none;
+    box-shadow: none;
   }
 
   .card-top {
@@ -128,11 +127,14 @@ const Heading = variant === "featured" ? "h3" : "h4";
   .card-links {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-4);
-    padding-top: var(--space-2);
+    column-gap: var(--space-4);
   }
 
+  /* Tall enough (44px) to tap easily on a phone. */
   .card-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
     font-weight: 600;
     font-size: 0.95rem;
     text-decoration: none;
