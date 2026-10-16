@@ -6,31 +6,36 @@
   --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-mono: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
 
-  /* "Redline" palette: #070709 black, #1E1F24 charcoal, #B00020 deep red,
-     #FF2E2E bright red, #E6E8EB light grey. Every text pairing below has been
-     checked to be easy to read (contrast of at least 4.5 to 1).
-     The page backgrounds are the palette greys lifted 5% lighter. */
+  /* "Signal" palette: a near-black telemetry base with an electric teal
+     readout color. Every text pairing below has been checked to be easy to
+     read (contrast of at least 4.5 to 1). Red survives only as a muted
+     "flare" accent in the ambient glows and the existing amber "soon" badge —
+     it's no longer structural. The page backgrounds are the palette
+     neutrals lifted 5% lighter. */
   --bg: #f4f5f6;
   --surface: #ffffff;
   --surface-muted: #d9dce0;
   --text: #1e1f24;
   --text-muted: #4a4c55;
   --border: #cdd0d5;
-  /* Red for text and links, and a darker red when hovered. */
-  --accent: #b00020;
-  --accent-strong: #8e001a;
-  --accent-soft: #fbe6e9;
-  /* Red buttons with white text (same in both modes). */
-  --button: #b00020;
-  --button-hover: #8e001a;
+  /* Teal for text and links, and a darker teal when hovered. */
+  --accent: #0e7490;
+  --accent-strong: #0b5e68;
+  --accent-soft: #e2f3f6;
+  /* Teal buttons with white text (same in both modes). */
+  --button: #0e7490;
+  --button-hover: #0b5e68;
   --button-text: #ffffff;
-  /* The palette's exact red, for decoration only (grid and glow), not text. */
-  --brand: #b00020;
+  /* The palette's exact teal, for decoration only (grid and glow), not text. */
+  --brand: #0e7490;
+  /* The old redline flare: one muted glow for continuity, decoration only. */
+  --flare: #b00020;
   --soon: #8a4b00;
   --soon-soft: #fdf1e1;
-  /* Page background: a red grid seen through a frosted glass pane.
+  /* Page background: a teal circuit grid seen through a frosted glass pane.
      --pane tints the glass, --sheen is the light catching its surface. */
-  --grid-line: color-mix(in srgb, var(--brand) 40%, transparent);
+  --grid-line: color-mix(in srgb, var(--brand) 35%, transparent);
+  --grid-node: color-mix(in srgb, var(--brand) 55%, transparent);
   --pane: color-mix(in srgb, var(--bg) 30%, transparent);
   --sheen: rgb(255 255 255 / 0.4);
   --glow: color-mix(in srgb, var(--brand) 14%, transparent);
@@ -46,9 +51,9 @@
   --glass-blur: 6px;
   /* Soft colour glows behind the project cards. Kept faint on purpose: they
      should just warm the background, never tint a card red. */
-  --glow-1: color-mix(in srgb, #ff2e2e 9%, transparent);
-  --glow-2: color-mix(in srgb, #b00020 7%, transparent);
-  --glow-3: color-mix(in srgb, #5b6170 8%, transparent);
+  --glow-1: color-mix(in srgb, #22d3ee 8%, transparent);
+  --glow-2: color-mix(in srgb, #0e7490 7%, transparent);
+  --glow-3: color-mix(in srgb, #b00020 5%, transparent);
 
   --radius: 12px;
   --radius-sm: 6px;
@@ -75,14 +80,16 @@
     --text: #e6e8eb;
     --text-muted: #a1a4ad;
     --border: #2e3038;
-    /* Slightly lighter than #FF2E2E so link text stays easy to read on the
-       charcoal cards (pure #FF2E2E falls just short there). */
-    --accent: #ff4a4a;
-    --accent-strong: #ff7a7a;
-    --accent-soft: #3a1418;
-    --button: #b00020;
-    --button-hover: #d0102a;
-    --brand: #ff2e2e;
+    /* Bright cyan reads clearly as a readout color against the near-black
+       cards (checked: ~10:1 against --bg). */
+    --accent: #22d3ee;
+    --accent-strong: #67e8f9;
+    --accent-soft: #123038;
+    --button: #0e7490;
+    --button-hover: #0c6478;
+    --button-text: #ffffff;
+    --brand: #22d3ee;
+    --flare: #ff3b3b;
     --soon: #f3b366;
     --soon-soft: #2e2416;
     /* A thin light line along the top edge, plus a deep shadow underneath. */
@@ -90,18 +97,19 @@
       0 12px 32px -8px rgb(0 0 0 / 0.85);
     --shadow-hover: inset 0 1px 0 rgb(255 255 255 / 0.09), 0 4px 10px rgb(0 0 0 / 0.55),
       0 18px 40px -8px rgb(0 0 0 / 0.9);
-    --grid-line: color-mix(in srgb, var(--brand) 34%, transparent);
+    --grid-line: color-mix(in srgb, var(--brand) 30%, transparent);
+    --grid-node: color-mix(in srgb, var(--brand) 50%, transparent);
     --pane: color-mix(in srgb, var(--bg) 40%, transparent);
     --sheen: rgb(255 255 255 / 0.045);
-    --glow: color-mix(in srgb, var(--brand) 18%, transparent);
+    --glow: color-mix(in srgb, var(--brand) 16%, transparent);
     --glass-fill: rgb(30 31 36 / 0.4);
     --glass-solid: rgb(30 31 36 / 0.94);
     --glass-border: rgb(255 255 255 / 0.08);
     --glass-edge: rgb(255 255 255 / 0.22);
     --glass-sheen: rgb(255 255 255 / 0.08);
-    --glow-1: color-mix(in srgb, #ff2e2e 10%, transparent);
-    --glow-2: color-mix(in srgb, #b00020 12%, transparent);
-    --glow-3: color-mix(in srgb, #e6e8eb 4%, transparent);
+    --glow-1: color-mix(in srgb, #22d3ee 10%, transparent);
+    --glow-2: color-mix(in srgb, #0e7490 12%, transparent);
+    --glow-3: color-mix(in srgb, #ff3b3b 6%, transparent);
   }
 }
 

@@ -13,6 +13,8 @@ const Heading = variant === "featured" ? "h3" : "h4";
 ---
 
 <article class:list={["card", variant, { soon: comingSoon }]}>
+  <span class="card-bracket card-bracket-tl" aria-hidden="true"></span>
+  <span class="card-bracket card-bracket-br" aria-hidden="true"></span>
   <div class="card-top">
     <Heading class="card-title">{title}</Heading>
     {comingSoon && <span class="badge badge-soon">Coming soon</span>}
@@ -51,6 +53,7 @@ const Heading = variant === "featured" ? "h3" : "h4";
      border that's brighter along the top (light catching the edge), and a
      soft diagonal sheen across the top-left corner. */
   .card {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
@@ -64,6 +67,43 @@ const Heading = variant === "featured" ? "h3" : "h4";
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+
+  /* HUD corner brackets: a quiet technical flourish on hover/focus, not a
+     permanent fixture, so they never compete with the card's content. */
+  .card-bracket {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--brand);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+  }
+
+  .card-bracket-tl {
+    top: -1px;
+    left: -1px;
+    border-right: none;
+    border-bottom: none;
+    border-top-left-radius: var(--radius-sm);
+  }
+
+  .card-bracket-br {
+    bottom: -1px;
+    right: -1px;
+    border-left: none;
+    border-top: none;
+    border-bottom-right-radius: var(--radius-sm);
+  }
+
+  .card:hover .card-bracket,
+  .card:focus-within .card-bracket {
+    opacity: 0.85;
+  }
+
+  .card.soon .card-bracket {
+    display: none;
   }
 
   /* Only go see-through where the browser can blur behind the card. Otherwise

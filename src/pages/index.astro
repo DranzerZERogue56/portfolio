@@ -10,6 +10,7 @@ import { intro, facts } from "../data/about";
   <section class="hero" aria-labelledby="hero-title" data-hero>
     <div class="hero-bg" aria-hidden="true">
       <div class="hero-glow"></div>
+      <div class="hero-scan"></div>
     </div>
     <div class="container">
       <p class="eyebrow reveal" style="--i: 0">Portfolio</p>
@@ -154,6 +155,43 @@ import { intro, facts } from "../data/about";
     }
     to {
       transform: translate3d(4%, 3%, 0);
+    }
+  }
+
+  /* Signature moment: a thin signal line sweeps down through the hero once,
+     right as the name rises out of its mask. Off by default; only runs when
+     motion is allowed, same as the mask reveal it rides along with. */
+  .hero-scan {
+    position: absolute;
+    left: -10%;
+    right: -10%;
+    top: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--brand), transparent);
+    opacity: 0;
+    transform: translateY(-10%);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html.anim-ready .hero-scan {
+      animation: hero-sweep 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s 1 both;
+    }
+  }
+
+  @keyframes hero-sweep {
+    0% {
+      opacity: 0;
+      transform: translateY(-10%);
+    }
+    12% {
+      opacity: 0.8;
+    }
+    85% {
+      opacity: 0.5;
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(420%);
     }
   }
 
