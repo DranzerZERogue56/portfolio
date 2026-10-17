@@ -1,0 +1,95 @@
+<!doctype html>
+<!--
+  Generator for public/og-image.png, the link-preview image shown when the
+  site is shared (LinkedIn, Slack, texts). Not part of the built site — open
+  this at exactly 1200x630 and screenshot it, then save over public/og-image.png.
+  Kept here (instead of a one-off temp file) so it's easy to regenerate again
+  the next time the palette changes.
+-->
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face {
+    font-family: "sysmono";
+    src: local("Cascadia Code"), local("SF Mono"), local("Consolas");
+  }
+  html, body {
+    margin: 0; width: 1200px; height: 630px; overflow: hidden;
+    background: #121217;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  .grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(color-mix(in srgb, #22d3ee 30%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, #22d3ee 30%, transparent) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .nodes {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(color-mix(in srgb, #22d3ee 50%, transparent) 1.5px, transparent 1.5px);
+    background-size: 48px 48px;
+  }
+  .glow {
+    position: absolute; width: 900px; height: 900px; border-radius: 50%;
+    background: radial-gradient(circle, color-mix(in srgb, #22d3ee 16%, transparent) 0%, transparent 70%);
+    top: -420px; left: -260px;
+  }
+  .glow2 {
+    position: absolute; width: 700px; height: 700px; border-radius: 50%;
+    background: radial-gradient(circle, color-mix(in srgb, #0e7490 14%, transparent) 0%, transparent 70%);
+    bottom: -380px; right: -200px;
+  }
+  .content {
+    position: relative; height: 100%; box-sizing: border-box;
+    padding: 72px 90px; display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .eyebrow {
+    font-family: "sysmono", ui-monospace, monospace;
+    font-size: 24px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: #22d3ee;
+  }
+  h1 {
+    margin: 18px 0 0; font-size: 104px; font-weight: 800; letter-spacing: -0.02em;
+    color: #f4f5f6; line-height: 1;
+  }
+  .tagline {
+    margin-top: 28px; font-size: 32px; line-height: 1.4; max-width: 820px;
+    color: #c3c6cd;
+  }
+  .footer {
+    display: flex; justify-content: space-between; align-items: baseline;
+  }
+  .nav {
+    font-size: 24px; color: #8c8f99;
+  }
+  .url {
+    font-family: "sysmono", ui-monospace, monospace;
+    font-size: 26px; color: #22d3ee; font-weight: 600;
+  }
+  .bar {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 8px;
+    background: linear-gradient(90deg, #0e7490, #22d3ee);
+  }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="nodes"></div>
+  <div class="glow"></div>
+  <div class="glow2"></div>
+  <div class="content">
+    <div>
+      <div class="eyebrow">Portfolio</div>
+      <h1>Ben Wrenn</h1>
+      <div class="tagline">Computer science student &amp; builder &mdash; AI tools, mobile apps, and games.</div>
+    </div>
+    <div class="footer">
+      <div class="nav">Projects &middot; About &middot; Contact</div>
+      <div class="url">dranzer-portfolio.pages.dev</div>
+    </div>
+  </div>
+  <div class="bar"></div>
+</body>
+</html>
